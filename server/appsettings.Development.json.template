@@ -6,8 +6,9 @@
     }
   },
   "OpenAI": {
-    "ApiKey": "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",
+    "ApiKey": "YOUR_OPENROUTER_API_KEY_HERE",
     "BaseUrl": "https://openrouter.ai/api/v1",
     "Model": "openai/gpt-4o-mini"
   }
 }
+

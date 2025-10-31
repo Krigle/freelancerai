@@ -65,47 +65,59 @@ export default function Dashboard() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-        {error}
-      </div>
-    );
-  }
+  // Show error as a dismissible notification at the top
+  const errorNotification = error && (
+    <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 flex items-center justify-between">
+      <span>{error}</span>
+      <button
+        type="button"
+        onClick={clearError}
+        className="ml-4 text-red-500 hover:text-red-700 font-bold"
+      >
+        ✕
+      </button>
+    </div>
+  );
 
   const NoJobsMessage = () => (
-    <div className="text-center py-12">
-      <svg
-        className="mx-auto h-12 w-12 text-gray-400"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-        />
-      </svg>
-      <h3 className="mt-2 text-sm font-medium text-gray-900">
-        {filteredJobs.length === 0 && filters.searchQuery
-          ? "No jobs match your search"
-          : "No jobs analyzed yet"}
-      </h3>
-      <p className="mt-1 text-sm text-gray-500">
-        {filteredJobs.length === 0 && filters.searchQuery
-          ? "Try adjusting your search or filters"
-          : "Get started by analyzing your first job posting above."}
-      </p>
-      {filteredJobs.length === 0 && filters.searchQuery && (
-        <button
-          onClick={clearFilters}
-          className="mt-4 px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+    <div>
+      {/* Error notification */}
+      {errorNotification}
+
+      <div className="text-center py-12">
+        <svg
+          className="mx-auto h-12 w-12 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          Clear Filters
-        </button>
-      )}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          />
+        </svg>
+        <h3 className="mt-2 text-sm font-medium text-gray-900">
+          {filteredJobs.length === 0 && filters.searchQuery
+            ? "No jobs match your search"
+            : "No jobs analyzed yet"}
+        </h3>
+        <p className="mt-1 text-sm text-gray-500">
+          {filteredJobs.length === 0 && filters.searchQuery
+            ? "Try adjusting your search or filters"
+            : "Get started by analyzing your first job posting above."}
+        </p>
+        {filteredJobs.length === 0 && filters.searchQuery && (
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="mt-4 px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Clear Filters
+          </button>
+        )}
+      </div>
     </div>
   );
 
@@ -115,12 +127,16 @@ export default function Dashboard() {
 
   return (
     <div>
+      {/* Error notification */}
+      {errorNotification}
+
       {/* Header with count and refresh */}
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-900">
           Analyzed Jobs ({filteredJobs.length})
         </h2>
         <button
+          type="button"
           onClick={fetchJobs}
           className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         >
@@ -168,6 +184,7 @@ export default function Dashboard() {
           ).map(({ field, label }) => (
             <button
               key={field}
+              type="button"
               onClick={() => handleSortChange(field)}
               className={`px-3 py-1 text-sm rounded-lg transition-colors ${
                 sortField === field
@@ -189,6 +206,7 @@ export default function Dashboard() {
           {[10, 20, 50].map((count) => (
             <button
               key={count}
+              type="button"
               onClick={() => setItemsPerPage(count)}
               className={`px-3 py-1 text-sm rounded-lg transition-colors ${
                 itemsPerPage === count
@@ -204,7 +222,7 @@ export default function Dashboard() {
       </div>
 
       {/* Job Cards Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6 items-start">
         {paginatedJobs.map((job) => (
           <JobCard key={job.id} job={job} onDelete={handleJobDelete} />
         ))}
@@ -214,6 +232,7 @@ export default function Dashboard() {
       {totalPages > 1 && (
         <div className="flex justify-center items-center gap-4">
           <button
+            type="button"
             onClick={previousPage}
             disabled={currentPage === 1}
             className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -224,6 +243,7 @@ export default function Dashboard() {
             Page {currentPage} of {totalPages}
           </span>
           <button
+            type="button"
             onClick={nextPage}
             disabled={currentPage === totalPages}
             className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"

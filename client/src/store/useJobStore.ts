@@ -160,11 +160,19 @@ export const useJobStore = create<JobState>()(
             await deleteJobApi(id);
           } catch (err) {
             // Rollback on error
+            const errorMessage =
+              err instanceof Error ? err.message : "Failed to delete job";
             set({
               jobs: previousJobs,
-              error:
-                err instanceof Error ? err.message : "Failed to delete job",
+              error: errorMessage,
             });
+
+            // Auto-clear error after 5 seconds
+            setTimeout(() => {
+              if (get().error === errorMessage) {
+                set({ error: null });
+              }
+            }, 5000);
           }
         },
 
