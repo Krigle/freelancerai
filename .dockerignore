@@ -1,0 +1,91 @@
+# ============================================
+# .dockerignore - Exclude files from Docker build
+# ============================================
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+!README.md
+API_KEY_SETUP.md
+SECURITY.md
+ENVIRONMENT_SETUP_COMPLETE.md
+
+# Environment files
+.env
+.env.*
+*.env
+
+# Node modules (will be installed in Docker)
+client/node_modules
+client/dist
+client/.vite
+
+# .NET build artifacts
+server/bin
+server/obj
+server/publish
+**/bin
+**/obj
+
+# SQLite databases (local development)
+*.db
+*.db-shm
+*.db-wal
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Test files
+server/Tests
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+
+# Logs
+*.log
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Development scripts
+start-server.sh
+setup-env.sh
+setup-env.ps1
+
+# Sensitive configuration files
+server/appsettings.Development.json
+server/appsettings.Production.json
+server/appsettings.Staging.json
+!server/appsettings.json
+
+# Templates (not needed in production)
+*.template
+server/appsettings.Development.json.template
+
+# Docker files (not needed inside container)
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile
+.dockerignore
+
+# CI/CD
+.github
+.gitlab-ci.yml
+azure-pipelines.yml
+
+# Temporary files
+tmp
+temp
+*.tmp
+
