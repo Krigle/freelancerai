@@ -8,6 +8,7 @@ export default function Dashboard() {
     error,
     fetchJobs,
     deleteJob,
+    clearError,
     filters,
     setFilters,
     clearFilters,
