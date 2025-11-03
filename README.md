@@ -1,48 +1,53 @@
 # FreelanceFinderAI
 
-FreelanceFinderAI is a full-stack web application that leverages AI to analyze and extract structured data from freelance job postings. Users can paste job listings, and the app uses OpenRouter's API (with GPT-4o-mini) to intelligently parse key information like job title, company, skills, experience level, location, salary, and description.
+> AI-powered job posting analyzer for freelancers. Transform messy job listings into clean, structured data.
 
-## 🔒 Security First
+🌐 **Live Demo**: [freelancerai.pro](https://freelancerai.pro)
 
-**Important:** This project uses environment variables to protect your API keys. Before running the application, you must set up your environment:
+[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-```bash
-# Quick setup (recommended)
-./setup-env.sh  # macOS/Linux
-# or
-./setup-env.ps1  # Windows PowerShell
+## 📖 Overview
 
-# Manual setup
-cp .env.template .env
-# Then edit .env and add your OpenRouter API key
+FreelanceFinderAI is a full-stack web application that uses AI to analyze freelance job postings and extract structured data. Paste any job listing from Indeed, Upwork, or any other source, and get instant AI-powered extraction of:
+
+- 📋 Job title and company name
+- 💼 Required skills and technologies
+- 📊 Experience level (entry/mid/senior/lead)
+- 📍 Location (remote/hybrid/on-site)
+- 💰 Salary range
+- 📝 Clean, formatted summary with bullet points
+
+## ✨ Features
+
+- **AI-Powered Extraction**: Uses OpenRouter API (GPT-4o-mini) with custom prompt engineering
+- **Smart Preprocessing**: Removes webpage noise (navigation, footers, ads) before AI analysis
+- **Persistent Storage**: SQLite database with Entity Framework Core
+- **Real-time Dashboard**: View all analyzed jobs in a responsive card layout
+- **Production-Ready**: Docker deployment, health checks, resilience policies, caching
+- **Type-Safe**: TypeScript frontend, C# backend with nullable reference types
+- **Modern Stack**: React 19, .NET 9, Zustand, Tailwind CSS, Vite
+
+## 🏗️ Tech Stack
+
+### Backend
+
+- **Framework**: .NET 9 Web API
+- **Database**: SQLite with Entity Framework Core
+- **AI Integration**: OpenRouter API (GPT-4o-mini)
+- **Resilience**: Polly (retry, circuit breaker, timeout)
+- **Patterns**: Dependency injection, repository pattern, async/await
+
+### Frontend
+
+- **Framework**: React 19 with TypeScript
+- **Build Tool**: Vite
+- **State Management**: Zustand
+- **Styling**: Tailwind CSS
+- **HTTP Client**: Axios with rate limiting
+
 ```
 
-**📖 See [SECURITY.md](SECURITY.md) for complete security and environment setup instructions.**
-
-## Features
-
-- **Job Posting Analysis**: Paste any job listing text and get AI-powered extraction of structured job data
-- **Data Extraction**: Automatically identifies and extracts job title, company name, required skills, experience level, location, salary range, and description summary
-- **Job Management**: View all analyzed jobs in a dashboard, delete jobs, and refresh the list with persistent storage
-- **Real-time Dashboard**: Displays jobs in a responsive card-based layout with loading states and error handling
-- **Secure Configuration**: Environment variable-based configuration for API keys and sensitive data
-- **Responsive Design**: Mobile-friendly UI built with Tailwind CSS
-
-## Built With
-
-- **Backend**: C# with .NET 9 Web API, Entity Framework Core, SQLite database
-- **Frontend**: React 19 with TypeScript, Vite for development, Tailwind CSS for styling, Zustand for state management
-- **AI Integration**: OpenRouter API (GPT-4o-mini) for intelligent data extraction with JSON parsing and error handling
-- **DevOps**: Docker and Docker Compose for containerization and local development
-- **Security**: Environment variable management, .gitignore protection, secure configuration patterns
-- **Other**: CORS configuration, comprehensive error handling, logging, and resilience policies (Polly)
-
-## Learning Outcomes
-
-This project demonstrates proficiency in:
-
-- **Backend Development**: RESTful API design, Entity Framework Core, dependency injection, async/await patterns, error handling, and configuration management
-- **Frontend Development**: React hooks, TypeScript interfaces, component composition, API integration, state management, and responsive design
-- **AI Integration**: OpenAI API usage, prompt engineering, JSON parsing, and fallback strategies
-- **DevOps**: Docker containerization, multi-stage builds, environment configuration, and production deployment preparation
-- **Full-Stack Architecture**: Combining modern technologies with clean code practices, type safety, and comprehensive documentation
+```
