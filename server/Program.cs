@@ -14,12 +14,9 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Configure Kestrel to use port from environment or default to 5001
-        var port = Environment.GetEnvironmentVariable("PORT") ?? "5001";
-        builder.WebHost.ConfigureKestrel(options =>
-        {
-            options.ListenLocalhost(int.Parse(port));
-        });
+        // ASPNETCORE_URLS environment variable will handle the binding
+        // Default: http://+:5001 (all interfaces) in production
+        // Can be overridden via environment variable
 
         // Add services to the container.
         builder.Services.AddControllers();
@@ -97,9 +94,25 @@ public class Program
 
         app.UseCors("AllowFrontend");
 
+        // Serve static files (React frontend) in production
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+        }
+
         app.UseAuthorization();
 
+        // Health check endpoint for Coolify
+        app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
+
         app.MapControllers();
+
+        // Fallback to index.html for SPA routing in production
+        if (!app.Environment.IsDevelopment())
+        {
+            app.MapFallbackToFile("index.html");
+        }
 
         app.Run();
     }
